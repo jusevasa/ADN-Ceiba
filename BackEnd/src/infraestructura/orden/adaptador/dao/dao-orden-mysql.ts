@@ -16,4 +16,9 @@ export class DaoOrdenMysql implements DaoOrden {
       'SELECT o.id, o.idCoordinador, o.idRepartidor, o.fechaCreacion, o.fechaEntrega, o.horaEntrega  FROM ORDENES o',
     );
   }
+  async listarOrden(): Promise<OrdenDto> {
+    return this.entityManager.query(
+      'SELECT o.id, o.idCoordinador, o.idRepartidor, o.fechaCreacion, o.fechaEntrega, o.horaEntrega  FROM ORDENES o',
+    );
+  }
 }

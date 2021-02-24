@@ -5,7 +5,7 @@ import { ManejadorListarOrden } from 'src/aplicacion/orden/consulta/listar-orden
 import { OrdenDto } from 'src/aplicacion/orden/consulta/dto/orden.dto';
 
 @Controller('ordenes')
-export class OrdenesControlador {
+export class OrdenControlador {
   constructor(
     private readonly manejadorCrearOrden: ManejadorCrearOrden,
     private readonly manejadorListarOrden: ManejadorListarOrden,

@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { OrdenesControlador } from './controlador/orden.controlador';
+import { OrdenControlador } from './controlador/orden.controlador';
 import { OrdenProveedorModule } from './proveedor/orden-proveedor.module';
 
 @Module({
   imports: [
     OrdenProveedorModule
   ],
-  controllers: [OrdenesControlador],
+  controllers: [OrdenControlador],
 })
 export class OrdenModule {}
