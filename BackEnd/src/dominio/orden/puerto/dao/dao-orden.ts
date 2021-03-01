@@ -11,6 +11,6 @@ export abstract class DaoOrden {
     * @param {number} id
     * @returns  la `orden` filtrada por id
     */
-  abstract async listarOrden(id: number): Promise<OrdenDto>;
+  abstract async listarOrden(id: string): Promise<OrdenDto>;
 
 }

@@ -1,5 +1,5 @@
 import { ServicioCrearOrden } from 'src/dominio/orden/servicio/servicio-crear-orden';
-import { Orden } from 'src/dominio/orden/modelo/orden';
+import { ordenTestDataBuilder } from '../../../tdb/orden/orden-tdb';
 import { RepositorioOrden } from 'src/dominio/orden/puerto/repositorio/repositorio-orden';
 import { SinonStubbedInstance } from 'sinon';
 import { createStubObj } from '../../../util/create-object.stub';
@@ -12,12 +12,12 @@ describe('ServicioCrearOrden', () => {
 
   beforeEach(() => {
 
-    repositorioOrdenStub = createStubObj<RepositorioOrden>(['existeRepartidor', 'guardar', 'actualizar', 'eliminar']);
+    repositorioOrdenStub = createStubObj<RepositorioOrden>(['existeRepartidor', 'guardar']);
     servicioCrearOrden = new ServicioCrearOrden(repositorioOrdenStub);
   });
 
   it('si el repartidor esta disponible guarda la orden', async () => {
-    const orden = new Orden(1, 1, new Date(), new Date(), '14:00:00');
+    const orden = new ordenTestDataBuilder().withHoraEntrega('14:00:00').build()
     repositorioOrdenStub.existeRepartidor.returns(Promise.resolve(false));
 
     await servicioCrearOrden.ejecutar(orden);
@@ -32,7 +32,7 @@ describe('ServicioCrearOrden', () => {
 
     await expect(
       servicioCrearOrden.ejecutar(
-        new Orden(1, 1, new Date(), new Date(), '14:00:00'),
+        new ordenTestDataBuilder().withHoraEntrega('14:00:00').build(),
       ),
     ).rejects.toThrow('El repartidor ya fue asignado en esta franja horaria');
 

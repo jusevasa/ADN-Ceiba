@@ -1,26 +1,34 @@
 import { Orden } from '../../modelo/orden';
 
 export abstract class RepositorioOrden {
-
+  /**
+  * @param {number} idRepartidor
+  * @param {Date} fechaEntrega
+  * @param {string} hora
+  ** @returns  boolean
+  */
   abstract async existeRepartidor(idRepartidor: number, fechaEntrega: Date, hora: string): Promise<boolean>;
 
   /**
+  * @param {number} id
+  * @returns  boolean
+  */
+  abstract async existeOrden(id: string): Promise<boolean>;
+
+  /**
   * @param {object} Orden
-  * @returns  la `orden`
   */
   abstract async guardar(orden: Orden): Promise<void>;
 
   /**
   * @param {number} id
   * @param {object} OrdenDto
-  * @returns una `orden` objeto contenido en la data
   */
-  abstract async actualizar(id: number, orden: Orden): Promise<void>;
+  abstract async actualizar(id: string, orden: Orden): Promise<void>;
 
   /**
   * @param {number} id
-  * @returns status code
   */
-  abstract async eliminar(id: number): Promise<void>;
+  abstract async eliminar(id: string): Promise<void>;
 
 }

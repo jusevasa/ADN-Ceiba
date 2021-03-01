@@ -4,10 +4,10 @@ import { DaoOrden } from 'src/dominio/orden/puerto/dao/dao-orden';
 import { OrdenDto } from 'src/aplicacion/orden/consulta/dto/orden.dto';
 
 @Injectable()
-export class ManejadorListarOrdenes {
+export class ManejadorListarOrden {
   constructor(private daoOrden: DaoOrden) { }
 
-  async ejecutar(): Promise<OrdenDto[]> {
-    return this.daoOrden.listarOrdenes();
+  async ejecutar(id: string): Promise<OrdenDto> {
+    return this.daoOrden.listarOrden(id);
   }
 }

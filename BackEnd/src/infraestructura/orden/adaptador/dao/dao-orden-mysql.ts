@@ -9,16 +9,16 @@ export class DaoOrdenMysql implements DaoOrden {
   constructor(
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
-  ) {}
+  ) { }
 
   async listarOrdenes(): Promise<OrdenDto[]> {
     return this.entityManager.query(
       'SELECT o.id, o.idCoordinador, o.idRepartidor, o.fechaCreacion, o.fechaEntrega, o.horaEntrega  FROM ORDENES o',
     );
   }
-  async listarOrden(): Promise<OrdenDto> {
+  async listarOrden(id: string): Promise<OrdenDto> {
     return this.entityManager.query(
-      'SELECT o.id, o.idCoordinador, o.idRepartidor, o.fechaCreacion, o.fechaEntrega, o.horaEntrega  FROM ORDENES o',
+      `SELECT o.id, o.idCoordinador, o.idRepartidor, o.fechaCreacion, o.fechaEntrega, o.horaEntrega  FROM ORDENES o where id=${id}`,
     );
   }
 }

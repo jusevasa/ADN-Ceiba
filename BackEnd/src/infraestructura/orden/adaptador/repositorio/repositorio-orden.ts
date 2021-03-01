@@ -13,12 +13,17 @@ export class RepositorioOrdenImp implements RepositorioOrden {
   ) { }
 
   async existeRepartidor(idRepartidor: number, fechaEntrega: Date, horaEntrega: string): Promise<boolean> {
-    const [orden, ordenCount] = await this.repositorio.findAndCount({
+    const search = await this.repositorio.find({
       idRepartidor: idRepartidor,
       fechaEntrega: fechaEntrega,
       horaEntrega: horaEntrega
     })
-    return ordenCount > 0 ? true : false
+    return search.length > 0 ? true : false
+  }
+
+  async existeOrden(id: string): Promise<boolean> {
+    const search = await this.repositorio.find({ id: Number(id) })
+    return search.length > 0 ? true : false
   }
 
   async guardar(orden: Orden) {
@@ -31,12 +36,19 @@ export class RepositorioOrdenImp implements RepositorioOrden {
     await this.repositorio.save(entidad);
   }
 
-  async actualizar(id: number, orden: Orden) {
-    console.log('true')
+  async actualizar(id: string, orden: Orden) {
+    let ordenParaActualizar = await this.repositorio.findOne({ id: Number(id) });
+    ordenParaActualizar.idCoordinador = orden.idCoordinador;
+    ordenParaActualizar.idRepartidor = orden.idRepartidor;
+    ordenParaActualizar.fechaCreacion = orden.fechaCreacion;
+    ordenParaActualizar.fechaEntrega = orden.fechaEntrega;
+    ordenParaActualizar.horaEntrega = orden.horaEntrega;
+    await this.repositorio.save(ordenParaActualizar);
   }
 
-  async eliminar(id: number) {
-    console.log('true')
+  async eliminar(id: string) {
+    let ordenParaEliminar = await this.repositorio.findOne({ id: Number(id) });
+    await this.repositorio.remove(ordenParaEliminar);
   }
 
 }
