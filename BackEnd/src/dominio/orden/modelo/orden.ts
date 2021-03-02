@@ -1,9 +1,9 @@
-import { ErrorHorarioLaboral } from '../../errores/error-horario-laboral'
-import { ErrorFranjaHoraria } from '../../errores/error-franja-horaria'
+import { ErrorHorarioLaboral } from '../../errores/error-horario-laboral';
+import { ErrorFranjaHoraria } from '../../errores/error-franja-horaria';
 
 const HORA_INICIAL = 7;
 const HORA_FINAL = 17;
-const VALIDAR_MINUTOS = new RegExp("0[0]|[3]0");
+const VALIDAR_MINUTOS = new RegExp('0[0]|[3]0');
 
 export class Orden {
   readonly #idCoordinador: number;
@@ -28,7 +28,7 @@ export class Orden {
     const horaIngresada = Number(hora.split(':')[0]);
 
     if (horaIngresada <= HORA_INICIAL || horaIngresada >= HORA_FINAL) {
-      throw new ErrorHorarioLaboral(`La hora ingresada no corresponde al horario laboral`)
+      throw new ErrorHorarioLaboral(`La hora ingresada no corresponde al horario laboral`);
     }
 
   }
@@ -38,7 +38,7 @@ export class Orden {
 
     const minutoIngresado = hora.split(':')[1];
     if (!VALIDAR_MINUTOS.test(minutoIngresado)) {
-      throw new ErrorFranjaHoraria(`La franja horaria determina no es valida`)
+      throw new ErrorFranjaHoraria(`La franja horaria determina no es valida`);
     }
 
   }
