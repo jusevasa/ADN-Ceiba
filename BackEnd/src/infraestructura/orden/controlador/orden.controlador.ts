@@ -41,6 +41,7 @@ export class OrdenControlador {
   async actualizar(@Param('id') id: string, @Body() comandoActualizarOrden: ComandoActualizarOrden) {
     return this.manejadorActualizarOrden.ejecutar(id, comandoActualizarOrden);
   }
+
   @Delete(':id')
   async eliminar(@Param('id') comandoEliminarOrden: ComandoEliminarOrden) {
     return this.manejadorEliminarOrden.ejecutar(comandoEliminarOrden);
