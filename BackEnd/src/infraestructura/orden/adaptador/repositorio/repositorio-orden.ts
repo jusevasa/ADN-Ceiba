@@ -10,20 +10,24 @@ export class RepositorioOrdenImp implements RepositorioOrden {
   constructor(
     @InjectRepository(OrdenEntidad)
     private readonly repositorio: Repository<OrdenEntidad>,
-  ) { }
+  ) {}
 
-  async existeRepartidor(idRepartidor: number, fechaEntrega: Date, horaEntrega: string): Promise<boolean> {
+  async existeRepartidor(
+    idRepartidor: number,
+    fechaEntrega: Date,
+    horaEntrega: string,
+  ): Promise<boolean> {
     const search = await this.repositorio.find({
-      idRepartidor: idRepartidor,
-      fechaEntrega: fechaEntrega,
-      horaEntrega: horaEntrega
-    })
-    return search.length > 0 ? true : false
+      idRepartidor,
+      fechaEntrega,
+      horaEntrega,
+    });
+    return search.length > 0 ? true : false;
   }
 
   async existeOrden(id: string): Promise<boolean> {
-    const search = await this.repositorio.find({ id: Number(id) })
-    return search.length > 0 ? true : false
+    const search = await this.repositorio.find({ id: Number(id) });
+    return search.length > 0 ? true : false;
   }
 
   async guardar(orden: Orden) {
@@ -37,7 +41,9 @@ export class RepositorioOrdenImp implements RepositorioOrden {
   }
 
   async actualizar(id: string, orden: Orden) {
-    let ordenParaActualizar = await this.repositorio.findOne({ id: Number(id) });
+    const ordenParaActualizar = await this.repositorio.findOne({
+      id: Number(id),
+    });
     ordenParaActualizar.idCoordinador = orden.idCoordinador;
     ordenParaActualizar.idRepartidor = orden.idRepartidor;
     ordenParaActualizar.fechaCreacion = orden.fechaCreacion;
@@ -47,8 +53,9 @@ export class RepositorioOrdenImp implements RepositorioOrden {
   }
 
   async eliminar(id: string) {
-    let ordenParaEliminar = await this.repositorio.findOne({ id: Number(id) });
+    const ordenParaEliminar = await this.repositorio.findOne({
+      id: Number(id),
+    });
     await this.repositorio.remove(ordenParaEliminar);
   }
-
 }

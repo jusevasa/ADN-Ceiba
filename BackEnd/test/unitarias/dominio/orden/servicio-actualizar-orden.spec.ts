@@ -1,5 +1,5 @@
 import { ServicioActualizarOrden } from 'src/dominio/orden/servicio/servicio-actualizar-orden';
-import { ordenTestDataBuilder } from '../../../tdb/orden/orden-tdb';
+import { OrdenTestDataBuilder } from '../../../tdb/orden/orden-tdb';
 import { RepositorioOrden } from 'src/dominio/orden/puerto/repositorio/repositorio-orden';
 import { SinonStubbedInstance } from 'sinon';
 import { createStubObj } from '../../../util/create-object.stub';
@@ -9,7 +9,7 @@ describe('ServicioActualizarOrden', () => {
 
   let servicioActualizarOrden: ServicioActualizarOrden;
   let repositorioOrdenStub: SinonStubbedInstance<RepositorioOrden>;
-  const orden = new ordenTestDataBuilder().withHoraEntrega('14:00:00').build()
+  const orden = new OrdenTestDataBuilder().withHoraEntrega('14:00:00').build()
   const id = '1'
 
   beforeEach(() => {

@@ -1,6 +1,6 @@
 import { Orden } from '../../../src/dominio/orden/modelo/orden'
 
-export class ordenTestDataBuilder {
+export class OrdenTestDataBuilder {
     public idCoordinador: number;
     public idRepartidor: number;
     public fechaCreacion: Date;
