@@ -18,7 +18,7 @@ import { ComandoCrearOrden } from 'src/aplicacion/orden/comando/crear-orden.coma
 import { AppLogger } from 'src/infraestructura/configuracion/ceiba-logger.service';
 import { createSandbox, SinonStubbedInstance } from 'sinon';
 import { createStubObj } from '../../../util/create-object.stub';
-import { ordenTestDataBuilder } from '../../../tdb/orden/orden-tdb'
+import { OrdenTestDataBuilder } from '../../../tdb/orden/orden-tdb'
 import { ServicioActualizarOrden } from 'src/dominio/orden/servicio/servicio-actualizar-orden';
 import { ServicioEliminarOrden } from 'src/dominio/orden/servicio/servicio-eliminar-orden';
 
@@ -32,7 +32,7 @@ describe('Pruebas al controlador de ordenes', () => {
   let app: INestApplication;
   let repositorioOrden: SinonStubbedInstance<RepositorioOrden>;
   let daoOrden: SinonStubbedInstance<DaoOrden>;
-  const ordenTest = new ordenTestDataBuilder()
+  const ordenTest = new OrdenTestDataBuilder()
   /**
    * No Inyectar los módulos completos (Se trae TypeORM y genera lentitud al levantar la prueba, traer una por una las dependencias)
    **/
