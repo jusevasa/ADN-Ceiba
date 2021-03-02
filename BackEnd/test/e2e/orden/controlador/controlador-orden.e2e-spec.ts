@@ -18,7 +18,7 @@ import { ComandoCrearOrden } from 'src/aplicacion/orden/comando/crear-orden.coma
 import { AppLogger } from 'src/infraestructura/configuracion/ceiba-logger.service';
 import { createSandbox, SinonStubbedInstance } from 'sinon';
 import { createStubObj } from '../../../util/create-object.stub';
-import { OrdenTestDataBuilder } from '../../../tdb/orden/orden-tdb'
+import { OrdenTestDataBuilder } from '../../../tdb/orden/orden-tdb';
 import { ServicioActualizarOrden } from 'src/dominio/orden/servicio/servicio-actualizar-orden';
 import { ServicioEliminarOrden } from 'src/dominio/orden/servicio/servicio-eliminar-orden';
 
@@ -28,17 +28,22 @@ import { ServicioEliminarOrden } from 'src/dominio/orden/servicio/servicio-elimi
 const sinonSandbox = createSandbox();
 
 describe('Pruebas al controlador de ordenes', () => {
-
   let app: INestApplication;
   let repositorioOrden: SinonStubbedInstance<RepositorioOrden>;
   let daoOrden: SinonStubbedInstance<DaoOrden>;
-  const ordenTest = new OrdenTestDataBuilder()
+  const ordenTest = new OrdenTestDataBuilder();
   /**
    * No Inyectar los módulos completos (Se trae TypeORM y genera lentitud al levantar la prueba, traer una por una las dependencias)
    **/
   beforeAll(async () => {
-    repositorioOrden = createStubObj<RepositorioOrden>(['existeRepartidor', 'existeOrden', 'guardar', 'actualizar', 'eliminar'], sinonSandbox);
-    daoOrden = createStubObj<DaoOrden>(['listarOrdenes', 'listarOrden'], sinonSandbox);
+    repositorioOrden = createStubObj<RepositorioOrden>(
+      ['existeRepartidor', 'existeOrden', 'guardar', 'actualizar', 'eliminar'],
+      sinonSandbox,
+    );
+    daoOrden = createStubObj<DaoOrden>(
+      ['listarOrdenes', 'listarOrden'],
+      sinonSandbox,
+    );
     const moduleRef = await Test.createTestingModule({
       controllers: [OrdenControlador],
       providers: [
@@ -64,7 +69,7 @@ describe('Pruebas al controlador de ordenes', () => {
         ManejadorActualizarOrden,
         ManejadorEliminarOrden,
         ManejadorListarOrdenes,
-        ManejadorListarOrden
+        ManejadorListarOrden,
       ],
     }).compile();
 
@@ -84,14 +89,15 @@ describe('Pruebas al controlador de ordenes', () => {
   });
 
   it('debería listar las ordenes', () => {
-
-    const ordenes: any[] = [{
-      idCoordinador: 2,
-      idRepartidor: 1,
-      fechaCreacion: "02-23-2021",
-      fechaEntrega: "02-23-2021",
-      horaEntrega: "15:30:00"
-    }];
+    const ordenes: any[] = [
+      {
+        idCoordinador: 2,
+        idRepartidor: 1,
+        fechaCreacion: '02-23-2021',
+        fechaEntrega: '02-23-2021',
+        horaEntrega: '15:30:00',
+      },
+    ];
     daoOrden.listarOrdenes.returns(Promise.resolve(ordenes));
 
     return request(app.getHttpServer())
@@ -101,14 +107,16 @@ describe('Pruebas al controlador de ordenes', () => {
   });
 
   it('debería listar la orden', () => {
-    const orden: any = [{
-      id: 1,
-      idCoordinador: 2,
-      idRepartidor: 1,
-      fechaCreacion: "02-23-2021",
-      fechaEntrega: "02-23-2021",
-      horaEntrega: "15:30:00"
-    }];
+    const orden: any = [
+      {
+        id: 1,
+        idCoordinador: 2,
+        idRepartidor: 1,
+        fechaCreacion: '02-23-2021',
+        fechaEntrega: '02-23-2021',
+        horaEntrega: '15:30:00',
+      },
+    ];
     daoOrden.listarOrden.returns(Promise.resolve(orden));
 
     return request(app.getHttpServer())
@@ -120,43 +128,37 @@ describe('Pruebas al controlador de ordenes', () => {
   it('debería crear la orden', () => {
     return request(app.getHttpServer())
       .post('/orden')
-      .send(
-        ordenTest
-      )
+      .send(ordenTest)
       .expect(HttpStatus.CREATED)
       .expect(201);
-
   });
 
-  // it('debería actualizar la orden', async () => {
+  it('debería actualizar la orden', async () => {
+    repositorioOrden.existeOrden.returns(Promise.resolve(true));
+    return await request(app.getHttpServer())
+      .put('/orden/1')
+      .send(ordenTest)
+      .expect(200);
+  });
 
-  //   return await request(app.getHttpServer())
-  //     .put('/orden/1')
-  //     .send(
-  //       ordenTest
-  //     )
-  //     .expect(200);
-  // });
-
-  // it('debería borrar la orden', async () => {
-  //   repositorioOrden.existeOrden.returns(Promise.resolve(false));
-  //   return await request(app.getHttpServer()).del('/orden/1').expect(200)
-  // });
-
+  it('debería borrar la orden', async () => {
+    repositorioOrden.existeOrden.returns(Promise.resolve(true));
+    return await request(app.getHttpServer()).del('/orden/1').expect(200)
+  });
 
   it('debería fallar al ingresar una hora fuera de lo establecido', async () => {
-
     const orden: ComandoCrearOrden = {
       idCoordinador: 2,
       idRepartidor: 1,
       fechaCreacion: new Date(),
       fechaEntrega: new Date(),
-      horaEntrega: "18:00:00"
+      horaEntrega: '18:00:00',
     };
     const mensaje = 'La hora ingresada no corresponde al horario laboral';
 
     const response = await request(app.getHttpServer())
-      .post('/orden').send(orden)
+      .post('/orden')
+      .send(orden)
       .expect(HttpStatus.BAD_REQUEST);
     expect(response.body.message).toBe(mensaje);
     expect(response.body.statusCode).toBe(HttpStatus.BAD_REQUEST);
@@ -168,13 +170,14 @@ describe('Pruebas al controlador de ordenes', () => {
       idRepartidor: 1,
       fechaCreacion: new Date(),
       fechaEntrega: new Date(),
-      horaEntrega: "15:00:00"
+      horaEntrega: '15:00:00',
     };
     const mensaje = `El repartidor ya fue asignado en esta franja horaria`;
     repositorioOrden.existeRepartidor.returns(Promise.resolve(true));
 
     const response = await request(app.getHttpServer())
-      .post('/orden').send(orden)
+      .post('/orden')
+      .send(orden)
       .expect(HttpStatus.BAD_REQUEST);
     expect(response.body.message).toBe(mensaje);
     expect(response.body.statusCode).toBe(HttpStatus.BAD_REQUEST);
