@@ -18,7 +18,7 @@ export abstract class RepositorioOrden {
   /**
   * @param {object} Orden
   */
-  abstract async guardar(orden: Orden): Promise<void>;
+  abstract async guardar(orden: Orden): Promise<any>;
 
   /**
   * @param {number} id

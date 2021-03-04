@@ -37,7 +37,7 @@ export class RepositorioOrdenImp implements RepositorioOrden {
     entidad.fechaCreacion = orden.fechaCreacion;
     entidad.fechaEntrega = orden.fechaEntrega;
     entidad.horaEntrega = orden.horaEntrega;
-    await this.repositorio.save(entidad);
+    return await this.repositorio.save(entidad);
   }
 
   async actualizar(id: string, orden: Orden) {

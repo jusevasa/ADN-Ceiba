@@ -133,17 +133,17 @@ describe('Pruebas al controlador de ordenes', () => {
       .expect(201);
   });
 
-  it('debería actualizar la orden', async () => {
+  it('debería actualizar la orden', () => {
     repositorioOrden.existeOrden.returns(Promise.resolve(true));
-    return await request(app.getHttpServer())
+    return request(app.getHttpServer())
       .put('/orden/1')
       .send(ordenTest)
       .expect(200);
   });
 
-  it('debería borrar la orden', async () => {
+  it('debería borrar la orden', () => {
     repositorioOrden.existeOrden.returns(Promise.resolve(true));
-    return await request(app.getHttpServer()).del('/orden/1').expect(200)
+    return request(app.getHttpServer()).del('/orden/1').expect(200)
   });
 
   it('debería fallar al ingresar una hora fuera de lo establecido', async () => {

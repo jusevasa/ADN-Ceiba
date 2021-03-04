@@ -1,4 +1,14 @@
-import { Body, Controller, Param, Get, Post, Put, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Param,
+  Get,
+  Post,
+  Put,
+  Delete,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { ComandoCrearOrden } from 'src/aplicacion/orden/comando/crear-orden.comando';
 import { ManejadorCrearOrden } from 'src/aplicacion/orden/comando/crear-orden.manejador';
 import { ComandoActualizarOrden } from 'src/aplicacion/orden/comando/actualizar-orden.comando';
@@ -17,8 +27,7 @@ export class OrdenControlador {
     private readonly manejadorCrearOrden: ManejadorCrearOrden,
     private readonly manejadorActualizarOrden: ManejadorActualizarOrden,
     private readonly manejadorEliminarOrden: ManejadorEliminarOrden,
-  ) { }
-
+  ) {}
 
   @Get()
   async listar(): Promise<OrdenDto[]> {
@@ -33,12 +42,15 @@ export class OrdenControlador {
   @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
   async crear(@Body() comandoCrearOrden: ComandoCrearOrden) {
-    await this.manejadorCrearOrden.ejecutar(comandoCrearOrden);
+    return this.manejadorCrearOrden.ejecutar(comandoCrearOrden);
   }
 
   @Put(':id')
   @UsePipes(new ValidationPipe({ transform: true }))
-  async actualizar(@Param('id') id: string, @Body() comandoActualizarOrden: ComandoActualizarOrden) {
+  async actualizar(
+    @Param('id') id: string,
+    @Body() comandoActualizarOrden: ComandoActualizarOrden,
+  ) {
     return this.manejadorActualizarOrden.ejecutar(id, comandoActualizarOrden);
   }
 

@@ -1,4 +1,4 @@
 import { combineReducers } from 'redux';
-import productos from './productos/productosReductor';
+import ordenes from './ordenes/ordenesReductor';
 
-export default combineReducers({ productos });
+export default combineReducers({ ordenes });

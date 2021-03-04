@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const BrandDiv = styled.div`
-  margin: 5px;
+  margin: 0px;
 `;
 
 export const LogoImg = styled.img`

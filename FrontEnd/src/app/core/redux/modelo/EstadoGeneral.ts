@@ -1,5 +1,5 @@
-import { EstadoProducto } from './EstadoProducto';
+import { EstadoOrden } from './EstadoOrden';
 
 export interface EstadoGeneral {
-  productos: EstadoProducto;
+  ordenes: EstadoOrden;
 }

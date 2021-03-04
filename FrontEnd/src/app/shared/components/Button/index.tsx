@@ -8,7 +8,13 @@ export const Button = styled.button`
   display: block;
   width: 100%;
   text-align: center;
+  cursor: pointer;
+  border: none;
+  transition: background ease-in-out 250ms;
   &[disabled] {
     opacity: 0.3;
+  }
+  :hover {
+    background: #16361a;
   }
 `;

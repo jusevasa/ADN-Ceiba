@@ -1,6 +1,6 @@
-import { RepositorioOrden } from '../puerto/repositorio/repositorio-orden';
-import { Orden } from '../modelo/orden';
 import { ErrorDeNegocio } from 'src/dominio/errores/error-de-negocio';
+import { Orden } from '../modelo/orden';
+import { RepositorioOrden } from '../puerto/repositorio/repositorio-orden';
 
 export class ServicioCrearOrden {
 
@@ -13,6 +13,6 @@ export class ServicioCrearOrden {
         `El repartidor ya fue asignado en esta franja horaria`,
       );
     }
-    await this.repositorioOrden.guardar(orden);
+    return await this.repositorioOrden.guardar(orden);
   }
 }
